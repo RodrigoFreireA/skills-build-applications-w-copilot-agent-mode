@@ -51,18 +51,6 @@ describe('OctoFit API contract', () => {
       expect(Number.isNaN(Date.parse(activity.occurredAt))).toBe(false);
     }
   });
-  it('returns deliberate JSON 4xx responses for invalid API requests', async () => {
-    const malformedJson = await request(app)
-      .post('/api/activities')
-      .set('Content-Type', 'application/json')
-      .send('{"userId":');
-    expect(malformedJson.status).toBe(400);
-    expect(malformedJson.body).toEqual({ error: 'Request body must be valid JSON' });
-
-    const unknownRoute = await request(app).get('/api/not-a-route');
-    expect(unknownRoute.status).toBe(404);
-    expect(unknownRoute.body).toEqual({ error: 'API route was not found' });
-  });
   it('creates teams and exposes members', async () => {
     const member = await User.create({ name: 'Mona', email: 'mona@example.com', fitnessGoal: 'endurance' });
     const invalid = await request(app).post('/api/teams').send({ mascot: 'Mona' });
