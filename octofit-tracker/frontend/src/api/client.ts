@@ -1,4 +1,5 @@
 // Relative /api paths go through the Vite dev proxy, keeping port 8000 private.
+// The optional base URL supports deployed environments without changing route paths.
 export const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL as string | undefined) ?? '';
 
 export async function getJson<T>(path: string): Promise<T> {
